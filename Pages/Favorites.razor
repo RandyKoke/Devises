@@ -1,0 +1,22 @@
+﻿@page "/favorites"
+
+<h1>Devises Favorites</h1>
+
+@if (favorites.Count > 0)
+{
+    <ul>
+        @foreach (var favorite in favorites)
+        {
+            <li>@favorite</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Aucune devise favorite.</p>
+}
+
+@code {
+    private List<string> favorites = new() { "USD", "EUR" };
+}
+

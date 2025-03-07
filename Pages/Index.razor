@@ -1,0 +1,53 @@
+﻿@page "/"
+@inject ExchangeRateService ExchangeRateService
+
+<h1>Taux de Change</h1>
+
+<select @bind="baseCurrency">
+    @foreach (var currency in currencies)
+    {
+        <option value="@currency">@currency</option>
+    }
+</select>
+<button @onclick="GetRates">Afficher les taux</button>
+
+@if (rates != null)
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Devise</th>
+            <th>Taux</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var rate in rates)
+        {
+            <tr>
+                <td>@rate.Key</td>
+                <td>@rate.Value</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private string baseCurrency = "USD";
+    private Dictionary<string, decimal> rates;
+    private List<string> currencies = new() { "USD", "EUR", "GBP", "JPY", "AUD" };
+
+    private async Task GetRates()
+    {
+        var response = await ExchangeRateService.GetLatestRatesAsync(baseCurrency);
+        if (response != null)
+        {
+            rates = response.Conversion_Rates;
+        }
+        else
+        {
+            // Gérez le cas où la réponse est nulle (erreur lors de l'appel API)
+            rates = null;
+        }
+    }
+}

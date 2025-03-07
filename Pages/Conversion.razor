@@ -1,0 +1,55 @@
+﻿@page "/conversion"
+@inject ExchangeRateService ExchangeRateService
+
+<h1>Convertisseur de devises</h1>
+
+<div>
+    <label>Montant :</label>
+    <input type="number" @bind="amount" />
+</div>
+
+<div>
+    <label>De :</label>
+    <select @bind="fromCurrency">
+        @foreach (var currency in currencies)
+        {
+            <option value="@currency">@currency</option>
+        }
+    </select>
+
+    <label>À :</label>
+    <select @bind="toCurrency">
+        @foreach (var currency in currencies)
+        {
+            <option value="@currency">@currency</option>
+        }
+    </select>
+</div>
+
+<button @onclick="Convert">Convertir</button>
+
+@if (conversionResult != null)
+{
+    <p>@($"{amount} {fromCurrency} = {conversionResult} {toCurrency}")</p>
+}
+
+@code {
+    private decimal amount = 1;
+    private string fromCurrency = "USD";
+    private string toCurrency = "EUR";
+    private decimal? conversionResult;
+    private List<string> currencies = new() { "USD", "EUR", "GBP", "JPY", "AUD" };
+
+    private async Task Convert()
+    {
+        var response = await ExchangeRateService.GetLatestRatesAsync(fromCurrency);
+        if (response != null && response.Conversion_Rates.ContainsKey(toCurrency))
+        {
+            conversionResult = amount * response.Conversion_Rates[toCurrency];
+        }
+        else
+        {
+            conversionResult = null;
+        }
+    }
+}
