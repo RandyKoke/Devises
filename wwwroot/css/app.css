@@ -98,4 +98,15 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
+.form-select {
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    margin-top: 10px;
+}
+
+.mt-3 {
+    margin-top: 15px;
+}
 
