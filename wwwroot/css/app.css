@@ -97,6 +97,62 @@ a, .btn-link {
 
 .loading-progress-text:after {
     content: var(--blazor-load-percentage-text, "Loading");
-} 
- 
+}
+
+/* Style pour le tableau des taux */
+.exchange-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.exchange-table th, .exchange-table td {
+    border: 2px solid black; /* Bordures noires épaisses */
+    padding: 10px;
+    text-align: center;
+}
+
+.exchange-table th {
+    background-color: #f4f4f4; /* Couleur de fond pour les titres */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.exchange-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Couleur alternée pour les lignes */
+}
+
+.exchange-table tr:hover {
+    background-color: #e0e0e0; /* Effet au survol */
+}
+/* Style pour le conteneur du résultat */
+.result-box {
+    display: inline-block;
+    border: 3px solid black; /* Bordures noires épaisses */
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #fdfdfd; /* Fond blanc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Légère ombre */
+    transform-origin: center; /* Centre comme origine pour l'effet */
+}
+
+/* Animation d'apparition */
+@keyframes grow {
+    from {
+        transform: scale(0.5); /* Taille initiale réduite */
+        opacity: 0;           /* Invisible au départ */
+    }
+    to {
+        transform: scale(1);   /* Taille normale */
+        opacity: 1;            /* Complètement visible */
+    }
+}
+
+.result-box.animate {
+    animation: grow 0.5s ease-out; /* Applique l'effet d'agrandissement */
+}
+
 

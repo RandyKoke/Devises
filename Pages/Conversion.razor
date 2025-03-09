@@ -30,8 +30,11 @@
 
 @if (conversionResult != null)
 {
-    <p><strong>Résultat :</strong> @($"{amount} {fromCurrency} = {conversionResult} {toCurrency}")</p>
+<div class="result-box animate">
+    @($"{amount} {fromCurrency} = {conversionResult:F2} {toCurrency}")
+</div>
 }
+
 
 @code {
     private decimal amount = 1;
