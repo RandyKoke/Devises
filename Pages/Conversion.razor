@@ -11,7 +11,7 @@
 <div>
     <label>De :</label>
     <select @bind="fromCurrency">
-        @foreach (var currency in currencies)
+        @foreach (var currency in availableCurrencies)
         {
             <option value="@currency">@currency</option>
         }
@@ -19,7 +19,7 @@
 
     <label>À :</label>
     <select @bind="toCurrency">
-        @foreach (var currency in currencies)
+        @foreach (var currency in availableCurrencies)
         {
             <option value="@currency">@currency</option>
         }
@@ -30,7 +30,7 @@
 
 @if (conversionResult != null)
 {
-    <p>@($"{amount} {fromCurrency} = {conversionResult} {toCurrency}")</p>
+    <p>Résultat : @($"{amount} {fromCurrency} = {conversionResult} {toCurrency}")</p>
 }
 
 @code {
@@ -38,7 +38,16 @@
     private string fromCurrency = "USD";
     private string toCurrency = "EUR";
     private decimal? conversionResult;
-    private List<string> currencies = new() { "USD", "EUR", "GBP", "JPY", "AUD" };
+    private List<string> availableCurrencies = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ExchangeRateService.GetLatestRatesAsync("USD");
+        if (response != null)
+        {
+            availableCurrencies = response.Conversion_Rates.Keys.ToList();
+        }
+    }
 
     private async Task Convert()
     {

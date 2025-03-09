@@ -1,19 +1,31 @@
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using ConvertisseurdeDevises;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using ConvertisseurdeDevises.Services;
-using Microsoft.Extensions.Configuration;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
+var builder =  WebApplication.CreateBuilder(args);
 
-// Configuration automatique via wwwroot/appsettings.json
-builder.Services.AddScoped(sp => new HttpClient { 
-    BaseAddress = new Uri("https://v6.exchangerate-api.com/v6/") 
-});
-
-// Injection du service avec accès à la configuration
+// Configuration des services
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped(sp => 
+    new HttpClient { 
+        BaseAddress = new Uri("https://v6.exchangerate-api.com/") // URL de base de l'API
+    });
 builder.Services.AddScoped<ExchangeRateService>();
 
-await builder.Build().RunAsync();
+var app = builder.Build();
+
+// Configuration du pipeline
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host"); // Pointe vers le nouveau _Host.cshtml
+
+app.Run();

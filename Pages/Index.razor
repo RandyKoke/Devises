@@ -4,7 +4,7 @@
 <h1>Taux de Change</h1>
 
 <select @bind="baseCurrency">
-    @foreach (var currency in currencies)
+    @foreach (var currency in availableCurrencies)
     {
         <option value="@currency">@currency</option>
     }
@@ -35,7 +35,16 @@
 @code {
     private string baseCurrency = "USD";
     private Dictionary<string, decimal> rates;
-    private List<string> currencies = new() { "USD", "EUR", "GBP", "JPY", "AUD" };
+    private List<string> availableCurrencies = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ExchangeRateService.GetLatestRatesAsync(baseCurrency);
+        if (response != null)
+        {
+            availableCurrencies = response.Conversion_Rates.Keys.ToList();
+        }
+    }
 
     private async Task GetRates()
     {
@@ -43,11 +52,6 @@
         if (response != null)
         {
             rates = response.Conversion_Rates;
-        }
-        else
-        {
-            // Gérez le cas où la réponse est nulle (erreur lors de l'appel API)
-            rates = null;
         }
     }
 }
