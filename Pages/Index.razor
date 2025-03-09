@@ -4,7 +4,7 @@
 <h1>Taux de Change</h1>
 
 <select @bind="baseCurrency">
-    @foreach (var currency in availableCurrencies)
+    @foreach (var currency in allCurrencies)
     {
         <option value="@currency">@currency</option>
     }
@@ -31,18 +31,22 @@
         </tbody>
     </table>
 }
+else
+{
+    <p>Aucun taux disponible.</p>
+}
 
 @code {
     private string baseCurrency = "USD";
     private Dictionary<string, decimal> rates;
-    private List<string> availableCurrencies = new();
+    private List<string> allCurrencies = new();
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await ExchangeRateService.GetLatestRatesAsync(baseCurrency);
+        var response = await ExchangeRateService.GetLatestRatesAsync("USD");
         if (response != null)
         {
-            availableCurrencies = response.Conversion_Rates.Keys.ToList();
+            allCurrencies = response.Conversion_Rates.Keys.ToList();
         }
     }
 
@@ -52,6 +56,10 @@
         if (response != null)
         {
             rates = response.Conversion_Rates;
+        }
+        else
+        {
+            rates = null;
         }
     }
 }
