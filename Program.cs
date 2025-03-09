@@ -8,7 +8,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app"); 
 builder.RootComponents.Add<HeadOutlet>("head::after"); 
  
-// Configuration automatique via wwwroot/appsettings.json 
+// Configuration automatique via wwwroot/appsettings.json (Point super important !!!)
 builder.Services.AddScoped(sp => new HttpClient {  
     BaseAddress = new Uri("https://v6.exchangerate-api.com/v6/")  
 }); 
@@ -17,3 +17,4 @@ builder.Services.AddScoped(sp => new HttpClient {
 builder.Services.AddScoped<ExchangeRateService>(); 
  
 await builder.Build().RunAsync();
+
