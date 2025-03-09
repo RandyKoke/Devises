@@ -107,13 +107,13 @@ a, .btn-link {
 }
 
 .exchange-table th, .exchange-table td {
-    border: 2px solid black; /* Bordures noires épaisses */
+    border: 2px solid black; 
     padding: 10px;
     text-align: center;
 }
 
 .exchange-table th {
-    background-color: #f4f4f4; /* Couleur de fond pour les titres */
+    background-color: #f4f4f4; 
     font-weight: bold;
     font-size: 16px;
 }
@@ -128,7 +128,7 @@ a, .btn-link {
 /* Style pour le conteneur du résultat */
 .result-box {
     display: inline-block;
-    border: 3px solid black; /* Bordures noires épaisses */
+    border: 3px solid black; 
     padding: 20px;
     margin-top: 20px;
     font-size: 20px;
