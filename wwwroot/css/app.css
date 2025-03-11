@@ -186,3 +186,26 @@ a, .btn-link {
 }
 
 
+/* Espacement entre les boutons */
+.button-group {
+    display: flex;
+    gap: 15px; /* Espacement horizontal entre les boutons */
+    margin-top: 20px; /* Espacement au-dessus du groupe de boutons */
+}
+
+/* Conteneur général pour aérer la page */
+.page-container {
+    padding: 20px; /* Ajoute un espace autour du contenu */
+}
+
+/* Centrage des tableaux et des formulaires */
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Espacement vertical pour les sections */
+.section-spacing {
+    margin-bottom: 30px; /* Ajoute de l'espace entre les sections */
+}

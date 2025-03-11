@@ -1,46 +1,55 @@
 ﻿@page "/"
 @inherits ComponentBase
 
-<h1>Taux de Change</h1>
+<div class="page-container">
+    <h1 class="section-spacing">Taux de Change</h1>
 
-<select @bind="baseCurrency">
-    @foreach (var currency in allCurrencies)
+    <div class="center-content section-spacing">
+        <select @bind="baseCurrency">
+            @foreach (var currency in allCurrencies)
+            {
+                <option value="@currency">@currency</option>
+            }
+        </select>
+    </div>
+
+    <div class="button-group">
+        <button @onclick="GetRates">Afficher les taux</button>
+        <button @onclick="ToggleView">
+            @(showFavoritesOnly ? "Afficher tout" : "Afficher uniquement les favoris")
+        </button>
+    </div>
+
+    @if (rates != null)
     {
-        <option value="@currency">@currency</option>
+        <div class="center-content section-spacing">
+            <table class="exchange-table">
+                <thead>
+                <tr>
+                    <th>Devise</th>
+                    <th>Taux</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var rate in FilteredRates())
+                {
+                    <tr>
+                        <td>@rate.Key</td>
+                        <td>@rate.Value</td>
+                        <td>
+                            <button class="btn-favorite" @onclick="() => ToggleFavorite(rate.Key)">
+                                @(IsFavorite(rate.Key) ? "★" : "☆")
+                            </button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     }
-</select>
-<button @onclick="GetRates">Afficher les taux</button>
-<button @onclick="ToggleView">
-    @(showFavoritesOnly ? "Afficher tout" : "Afficher uniquement les favoris")
-</button>
-
-@if (rates != null)
-{
-    <table class="exchange-table">
-        <thead>
-        <tr>
-            <th>Devise</th>
-            <th>Taux</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var rate in FilteredRates())
-        {
-            <tr>
-                <td>@rate.Key</td>
-                <td>@rate.Value</td>
-                <td>
-                    <button class="btn-favorite" @onclick="() => ToggleFavorite(rate.Key)">
-                        @(IsFavorite(rate.Key) ? "★" : "☆")
-                    </button>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Aucun taux disponible.</p>
-}
+    else
+    {
+        <p>Choisissez une devise puis cliquez pour afficher les taux de change.</p>
+    }
+</div>

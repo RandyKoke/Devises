@@ -1,39 +1,44 @@
 ﻿@page "/conversion"
 @inherits ComponentBase
 
-<h1>Convertisseur de devises</h1>
+<div class="page-container">
+    <h1 class="section-spacing">Convertisseur de devises</h1>
 
-<div>
-    <label>Montant :</label>
-    <input type="number" @bind="amount" />
-</div>
-
-<div>
-    <label>De :</label>
-    <select @bind="fromCurrency">
-        @foreach (var currency in FilteredCurrencies())
-        {
-            <option value="@currency">@currency</option>
-        }
-    </select>
-
-    <label>À :</label>
-    <select @bind="toCurrency">
-        @foreach (var currency in FilteredCurrencies())
-        {
-            <option value="@currency">@currency</option>
-        }
-    </select>
-</div>
-
-<button @onclick="Convert">Convertir</button>
-<button @onclick="ToggleView">
-    @(showFavoritesOnly ? "Afficher toutes les devises" : "Afficher uniquement les devises favorites")
-</button>
-
-@if (conversionResult != null)
-{
-    <div class="result-box animate">
-        @($"{amount} {fromCurrency} = {conversionResult:F2} {toCurrency}")
+    <div class="center-content section-spacing">
+        <label>Montant :</label>
+        <input type="number" @bind="amount" />
     </div>
-}
+
+    <div class="center-content section-spacing">
+        <label>De :</label>
+        <select @bind="fromCurrency">
+            @foreach (var currency in FilteredCurrencies())
+            {
+                <option value="@currency">@currency</option>
+            }
+        </select>
+
+        <label>À :</label>
+        <select @bind="toCurrency">
+            @foreach (var currency in FilteredCurrencies())
+            {
+                <option value="@currency">@currency</option>
+            }
+        </select>
+    </div>
+
+    <div class="button-group">
+        <button @onclick="Convert">Convertir</button>
+        <button @onclick="ToggleView">
+            @(showFavoritesOnly ? "Afficher toutes les devises" : "Afficher uniquement les devises favorites")
+        </button>
+    </div>
+
+    @if (conversionResult != null)
+    {
+        <div class="result-box animate section-spacing">
+            @($"{amount} {fromCurrency} = {conversionResult:F2} {toCurrency}")
+        </div>
+    }
+</div>
+
