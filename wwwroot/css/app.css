@@ -107,13 +107,13 @@ a, .btn-link {
 }
 
 .exchange-table th, .exchange-table td {
-    border: 2px solid black; 
+    border: 2px solid black;
     padding: 10px;
     text-align: center;
 }
 
 .exchange-table th {
-    background-color: #f4f4f4; 
+    background-color: #f4f4f4;
     font-weight: bold;
     font-size: 16px;
 }
@@ -128,7 +128,7 @@ a, .btn-link {
 /* Style pour le conteneur du résultat */
 .result-box {
     display: inline-block;
-    border: 3px solid black; 
+    border: 3px solid black;
     padding: 20px;
     margin-top: 20px;
     font-size: 20px;
@@ -153,6 +153,36 @@ a, .btn-link {
 
 .result-box.animate {
     animation: grow 0.5s ease-out; /* Applique l'effet d'agrandissement */
+}
+
+/* Styles pour les boutons */
+.btn-favorite {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #ffd700; /* Couleur or */
+    transition: transform 0.3s;
+}
+
+.btn-favorite:hover {
+    transform: scale(1.2);
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff4444;
+    font-size: 1.1em;
+}
+
+/* Adaptation responsive */
+@media (max-width: 768px) {
+    .exchange-table th:nth-child(3),
+    .exchange-table td:nth-child(3) {
+        display: none;
+    }
 }
 
 

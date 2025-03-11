@@ -1,0 +1,63 @@
+@page "/favoris"
+@inject FavoriteService FavoriteService
+@inject ExchangeRateService ExchangeRateService
+
+<h1>Devises Favorites</h1>
+
+@if (favoriteRates.Any())
+{
+    <table class="exchange-table">
+        <thead>
+        <tr>
+            <th>Devise</th>
+            <th>Taux (USD)</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var rate in favoriteRates)
+        {
+            <tr>
+                <td>@rate.Key</td>
+                <td>@rate.Value</td>
+                <td>
+                    <button class="btn-remove" @onclick="() => RemoveFavorite(rate.Key)">
+                        ❌
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucune devise favorite.</p>
+}
+
+@code {
+    private Dictionary<string, decimal> favoriteRates = new();
+    private List<string> favoriteCurrencies = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFavorites();
+    }
+
+    private async Task LoadFavorites()
+    {
+        favoriteCurrencies = await FavoriteService.GetFavoritesAsync();
+        var ratesResponse = await ExchangeRateService.GetLatestRatesAsync("USD");
+        
+        favoriteRates = ratesResponse?.Conversion_Rates
+            .Where(r => favoriteCurrencies.Contains(r.Key))
+            .ToDictionary(r => r.Key, r => r.Value);
+    }
+
+    private async Task RemoveFavorite(string currency)
+    {
+        await FavoriteService.RemoveFavoriteAsync(currency);
+        await LoadFavorites();
+        StateHasChanged();
+    }
+}

@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject ExchangeRateService ExchangeRateService
+@inherits ComponentBase
 
 <h1>Taux de Change</h1>
 
@@ -10,6 +10,9 @@
     }
 </select>
 <button @onclick="GetRates">Afficher les taux</button>
+<button @onclick="ToggleView">
+    @(showFavoritesOnly ? "Afficher tout" : "Afficher uniquement les favoris")
+</button>
 
 @if (rates != null)
 {
@@ -18,14 +21,20 @@
         <tr>
             <th>Devise</th>
             <th>Taux</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var rate in rates)
+        @foreach (var rate in FilteredRates())
         {
             <tr>
                 <td>@rate.Key</td>
                 <td>@rate.Value</td>
+                <td>
+                    <button class="btn-favorite" @onclick="() => ToggleFavorite(rate.Key)">
+                        @(IsFavorite(rate.Key) ? "★" : "☆")
+                    </button>
+                </td>
             </tr>
         }
         </tbody>
@@ -34,32 +43,4 @@
 else
 {
     <p>Aucun taux disponible.</p>
-}
-
-@code {
-    private string baseCurrency = "USD";
-    private Dictionary<string, decimal> rates;
-    private List<string> allCurrencies = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        var response = await ExchangeRateService.GetLatestRatesAsync("USD");
-        if (response != null)
-        {
-            allCurrencies = response.Conversion_Rates.Keys.ToList();
-        }
-    }
-
-    private async Task GetRates()
-    {
-        var response = await ExchangeRateService.GetLatestRatesAsync(baseCurrency);
-        if (response != null)
-        {
-            rates = response.Conversion_Rates;
-        }
-        else
-        {
-            rates = null;
-        }
-    }
 }

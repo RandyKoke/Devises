@@ -1,5 +1,5 @@
 ﻿@page "/conversion"
-@inject ExchangeRateService ExchangeRateService
+@inherits ComponentBase
 
 <h1>Convertisseur de devises</h1>
 
@@ -11,7 +11,7 @@
 <div>
     <label>De :</label>
     <select @bind="fromCurrency">
-        @foreach (var currency in allCurrencies)
+        @foreach (var currency in FilteredCurrencies())
         {
             <option value="@currency">@currency</option>
         }
@@ -19,7 +19,7 @@
 
     <label>À :</label>
     <select @bind="toCurrency">
-        @foreach (var currency in allCurrencies)
+        @foreach (var currency in FilteredCurrencies())
         {
             <option value="@currency">@currency</option>
         }
@@ -27,42 +27,13 @@
 </div>
 
 <button @onclick="Convert">Convertir</button>
+<button @onclick="ToggleView">
+    @(showFavoritesOnly ? "Afficher toutes les devises" : "Afficher uniquement les devises favorites")
+</button>
 
 @if (conversionResult != null)
 {
-<div class="result-box animate">
-    @($"{amount} {fromCurrency} = {conversionResult:F2} {toCurrency}")
-</div>
-}
-
-@code {
-    private decimal amount = 1;
-    private string fromCurrency = "USD";
-    private string toCurrency = "EUR";
-    private decimal? conversionResult;
-    private List<string> allCurrencies = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        var response = await ExchangeRateService.GetLatestRatesAsync("USD");
-        if (response != null)
-        {
-            allCurrencies = response.Conversion_Rates.Keys.ToList();
-        }
-    }
-
-    private async Task Convert()
-    {
-        var responseFrom = await ExchangeRateService.GetLatestRatesAsync(fromCurrency);
-        var responseTo = await ExchangeRateService.GetLatestRatesAsync(toCurrency);
-
-        if (responseFrom != null && responseTo != null && responseFrom.Conversion_Rates.ContainsKey(toCurrency))
-        {
-            conversionResult = amount * responseFrom.Conversion_Rates[toCurrency];
-        }
-        else
-        {
-            conversionResult = null;
-        }
-    }
+    <div class="result-box animate">
+        @($"{amount} {fromCurrency} = {conversionResult:F2} {toCurrency}")
+    </div>
 }
