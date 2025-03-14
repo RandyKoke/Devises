@@ -39,4 +39,4 @@ Cliquez sur l'étoile à côté d'une devise pour l'ajouter à vos favoris. Acc�
 
 ##  Contribution
 
-Les contributions sont les bienvenues! N'hésitez pas à ouvrir une issue ou proposer une pull request.
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou proposer une pull request. Toujours est-il que je m'évertuerai, dans les jours et mois à venir, à rendre mon application visuellement attrayante et professionnelle avec un design esthétique et agréable.
