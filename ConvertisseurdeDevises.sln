@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertisseurdeDevises", "ConvertisseurdeDevises.csproj", "{9E0D192A-E422-4B4A-9DA3-50B568B2FC85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertisseurdeDevises.UnitTests", "ConvertisseurdeDevises.UnitTests\ConvertisseurdeDevises.UnitTests.csproj", "{01FAAE3D-95FC-4457-B569-D49C32045A89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{9E0D192A-E422-4B4A-9DA3-50B568B2FC85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E0D192A-E422-4B4A-9DA3-50B568B2FC85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E0D192A-E422-4B4A-9DA3-50B568B2FC85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01FAAE3D-95FC-4457-B569-D49C32045A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01FAAE3D-95FC-4457-B569-D49C32045A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01FAAE3D-95FC-4457-B569-D49C32045A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01FAAE3D-95FC-4457-B569-D49C32045A89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

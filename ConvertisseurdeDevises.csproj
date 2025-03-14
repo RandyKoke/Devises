@@ -19,12 +19,25 @@
       <Content Update="wwwroot\appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <Content Remove="ConvertisseurdeDevises.UnitTests\**" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="ConvertisseurdeDevises.UnitTests\obj\ConvertisseurdeDevises.UnitTests.csproj.nuget.dgspec.json" />
       <_ContentIncludedByDefault Remove="ConvertisseurdeDevises.UnitTests\obj\project.assets.json" />
       <_ContentIncludedByDefault Remove="ConvertisseurdeDevises.UnitTests\obj\project.packagespec.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="ConvertisseurdeDevises.UnitTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="ConvertisseurdeDevises.UnitTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="ConvertisseurdeDevises.UnitTests\**" />
     </ItemGroup>
 
 </Project>
